@@ -1,0 +1,6 @@
+START ;nach op
+;LoveSPO
+WORD 5
+-test WORD 6
+-last WRONGCOMMAND 5
+END
