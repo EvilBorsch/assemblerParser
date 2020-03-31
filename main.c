@@ -9,7 +9,6 @@ void printResult(char *metkaStr, char *operatorStr, char *operandStr, char *comm
 
 bool checkIfOperatorCorrect(char *str);
 
-char metka = '-';
 char commentSymbol = ';';
 
 int main(void) {
@@ -39,7 +38,6 @@ int main(void) {
 
 void appending(char *cArr, const char c) {
     unsigned long len = strlen(cArr);
-    cArr[len + 1] = cArr[len];
     cArr[len] = c;
 
 }
@@ -52,10 +50,13 @@ void parseString(char *buf, int numOfStr) {
     int i = 0;
     const int lenOf = strlen(buf);
     char ch;
+    if (buf[0]=='\n'){
+        printResult(NULL,NULL,NULL,NULL,numOfStr);
+        return;
+    }
     //// нахождение метки
     char *metkaStr = (char *) malloc(lenOf * sizeof(char));
-    if (buf[0] == metka) {
-        i++;
+    if (buf[0] != ' ' && buf[0]!= commentSymbol) {
         for (i; i < lenOf; i++) {
             ch = buf[i];
             if (ch == ' ') break;
@@ -66,6 +67,15 @@ void parseString(char *buf, int numOfStr) {
     }
 
     //////////
+
+    ch = buf[i];
+    //// нахождение первого слова
+    while (ch == ' ' && i < lenOf) {
+        i++;
+        ch = buf[i];
+    }
+    ////
+
     char *tempStr = (char *) malloc(lenOf * sizeof(char));
     char *operatorStr = (char *) malloc(lenOf * sizeof(char));
     char *operandStr = (char *) malloc(lenOf * sizeof(char));
@@ -75,7 +85,7 @@ void parseString(char *buf, int numOfStr) {
         ch = buf[i];
         if (ch == ' ' || ch == '\n') {
             if (tempStr[0] == commentSymbol) {
-                commentStr = tempStr;
+                commentStr = ++tempStr;
                 tempStr = (char *) malloc(lenOf * sizeof(char));
                 continue;
             }
@@ -105,6 +115,9 @@ void parseString(char *buf, int numOfStr) {
     free(operatorStr);
     tempStr = NULL;
     free(tempStr);
+    commentStr = NULL;
+    free(commentStr);
+
 }
 
 bool checkIfOperatorCorrect(char *str) {
