@@ -122,7 +122,7 @@ void parseString(char *buf, int numOfStr) {
 
 bool checkIfOperatorCorrect(char *str) {
     if (strcmp(str, "START") == 0 || strcmp(str, "END") == 0 || strcmp(str, "BYTE") == 0 || strcmp(str, "WORD") == 0 ||
-        strcmp(str, "RESB") == 0 || strcmp(str, "RESW") == 0) {
+        strcmp(str, "RESB") == 0 ||  strcmp(str, "RESW") == 0 || strcmp(str, "mov") == 0 || strcmp(str, "ret") == 0 || strcmp(str, "int") == 0)   {
         return true;
     }
     return false;
